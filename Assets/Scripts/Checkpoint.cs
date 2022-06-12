@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private TrackCheckpoints trackCheckpoints;
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.TryGetComponent<CarDriver>(out CarDriver player))
+        {
+            trackCheckpoints.PlayerThroughCheckpoint(this);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void setTrackCheckpoints(TrackCheckpoints track)
     {
-        
+        trackCheckpoints = track;
     }
 }

@@ -12,6 +12,7 @@ public class DriverAgent : Agent
     private CarDriver carDriver;
     void Awake()
     {
+        spawnPos = transform;
         carDriver = GetComponent<CarDriver>();
     }
     private void Start()
@@ -30,13 +31,13 @@ public class DriverAgent : Agent
     {
         transform.position = spawnPos.position;
         transform.forward = spawnPos.forward;
-        trackCheckpoints.ResetCheckpoint(transform);
+        //trackCheckpoints.ResetCheckpoint(transform);
     }
     public override void CollectObservations(VectorSensor sensor)
     {
-        Vector3 checkpointForward = trackCheckpoints.GetNextCheckpoint(transform).transform.forward;
-        float directionDot = Vector3.Dot(transform.forward, checkpointForward);
-        sensor.AddObservation(directionDot);
+        //Vector3 checkpointForward = trackCheckpoints.GetNextCheckpoint(transform).transform.forward;
+        //float directionDot = Vector3.Dot(transform.forward, checkpointForward);
+        //sensor.AddObservation(directionDot);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
