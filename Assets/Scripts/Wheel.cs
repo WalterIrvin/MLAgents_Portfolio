@@ -20,20 +20,17 @@ public class Wheel : MonoBehaviour
         
         turnAngle = steerInput * maxAngle + offset;
         wcol.steerAngle = turnAngle;
-        Debug.Log(wcol.steerAngle);
         UpdatePosition();
     }
 
     public void Accelerate(float powerInput)
     {
+        
         if (powered)
         {
-            
             if ((powerInput > 0 && old_torque < 0) || (powerInput < 0 && old_torque > 0))
             {
-                Debug.Log("cur tor: " + powerInput + " old tor: " + old_torque);
                 float diff = (transform.position - old_pos).magnitude;
-                Debug.Log(diff);
                 if (diff < dist_cutoff)
                 {
                     old_torque = powerInput;
@@ -41,7 +38,6 @@ public class Wheel : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("eepo :" + old_torque);
                     wcol.brakeTorque = brakeTor;
                     old_pos = transform.position;
                 }
@@ -51,6 +47,8 @@ public class Wheel : MonoBehaviour
                 old_torque = powerInput;
                 old_pos = transform.position;
                 wcol.motorTorque = powerInput;
+                wcol.brakeTorque = 0;
+                Debug.Log(wcol);
             }
             else
             {

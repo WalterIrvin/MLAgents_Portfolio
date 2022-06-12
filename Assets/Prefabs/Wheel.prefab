@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8932774875318067436, guid: 444d795ab5c289746a0d4da481fe5c57, type: 3}
       propertyPath: m_SuspensionDistance
-      value: 0.15
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8932774875318067436, guid: 444d795ab5c289746a0d4da481fe5c57, type: 3}
       propertyPath: m_SuspensionSpring.damper
@@ -118,7 +118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8932774875318067436, guid: 444d795ab5c289746a0d4da481fe5c57, type: 3}
       propertyPath: m_SuspensionSpring.spring
-      value: 15000
+      value: 25000
       objectReference: {fileID: 0}
     - target: {fileID: 8932774875318067436, guid: 444d795ab5c289746a0d4da481fe5c57, type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
@@ -138,7 +138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8932774875318067436, guid: 444d795ab5c289746a0d4da481fe5c57, type: 3}
       propertyPath: m_SuspensionSpring.targetPosition
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8932774875318067436, guid: 444d795ab5c289746a0d4da481fe5c57, type: 3}
       propertyPath: m_ForwardFriction.m_AsymptoteValue

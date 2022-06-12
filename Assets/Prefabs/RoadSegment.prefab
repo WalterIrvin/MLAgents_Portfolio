@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4c83b067d56464bac2ceef9bff9cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carList: []
 --- !u!1 &1889847230507136154
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +62,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889847230507136158}
+  - component: {fileID: 3430102294593938646}
   m_Layer: 0
   m_Name: RoadSegment
   m_TagString: Untagged
@@ -88,6 +90,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3430102294593938646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889847230507136154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece7fd1dca998aa429374d1acd0f7c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackcheckpoints:
+  - {fileID: 5554058984200573398}
+  - {fileID: 3359241834242700695}
 --- !u!1 &4385594828121103933
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4c83b067d56464bac2ceef9bff9cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carList: []
 --- !u!1 &8967569093240542395
 GameObject:
   m_ObjectHideFlags: 0

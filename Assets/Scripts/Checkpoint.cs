@@ -9,7 +9,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.TryGetComponent<CarDriver>(out CarDriver player))
         {
-            trackCheckpoints.PlayerThroughCheckpoint(this);
+            trackCheckpoints.CarThroughCheckpoint(this, other.transform);
         }
     }
     public void setTrackCheckpoints(TrackCheckpoints track)
