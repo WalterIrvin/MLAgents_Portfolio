@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class TrackCheckpoints : MonoBehaviour
 {
-    public event EventHandler OnPlayerCorrectCheckpoint;
-    public event EventHandler OnPlayerWrongCheckpoint;
+    public event EventHandler OnCarCorrectCheckpoint;
+    public event EventHandler OnCarWrongCheckpoint;
+    public class CarCheckpointEventArgs : EventArgs
+    {
+        public Transform car;
+    }
 
     [SerializeField] private List<Transform> carList;
     private List<Checkpoint> checkpointList;
@@ -46,26 +50,31 @@ public class TrackCheckpoints : MonoBehaviour
             int passedIdx = checkpointList.IndexOf(checkpoint);
             if (passedIdx == nextCheckpointIdx)
             {
-                Debug.Log("good work");
                 nextCheckpointIdx = (nextCheckpointIdx + 1) % checkpointList.Count;
                 nextCheckpointIDXList[carIdx] = nextCheckpointIdx;
-                OnPlayerCorrectCheckpoint?.Invoke(this, EventArgs.Empty);
+                CarCheckpointEventArgs correct = new CarCheckpointEventArgs();
+                correct.car = car;
+                OnCarCorrectCheckpoint?.Invoke(this, correct);
             }
             else
             {
-                Debug.Log("wrong");
-                OnPlayerWrongCheckpoint?.Invoke(this, EventArgs.Empty);
+                CarCheckpointEventArgs incorrect = new CarCheckpointEventArgs();
+                incorrect.car = car;
+                OnCarWrongCheckpoint?.Invoke(this, incorrect);
             }
         }
     }
 
-    public void ResetCheckpoint(Transform obj)
+    public void ResetCheckpoint(Transform car)
     {
-
+        int carIdx = carList.IndexOf(car);
+        nextCheckpointIDXList[carIdx] = 0;
     }
 
-    public Transform GetNextCheckpoint(Transform obj)
+    public Transform GetNextCheckpoint(Transform car)
     {
-        return transform;
+        int carIdx = carList.IndexOf(car);
+        int nextCheckpointIdx = nextCheckpointIDXList[carIdx];
+        return checkpointList[nextCheckpointIdx].transform;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using System;
 
 public class DriverAgent : Agent
 {
@@ -17,27 +18,36 @@ public class DriverAgent : Agent
     }
     private void Start()
     {
-        
+        trackCheckpoints.OnCarCorrectCheckpoint += TrackCheckpoints_OnCarCorrectCheckpoint;
+        trackCheckpoints.OnCarWrongCheckpoint += TrackCheckpoints_OnCarWrongCheckpoint;
     }
-    //private void TrackCheckpoints_OnCarWrongCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e)
-    //{
-
-    //}
-    //private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, TrackCheckpoints.CarCheckpointEventArgs e)
-    //{
-
-    //}
+    private void TrackCheckpoints_OnCarWrongCheckpoint(object sender, EventArgs e)
+    {
+        TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
+        if (args.car == transform)
+        {
+            AddReward(-1f);
+        }
+    }
+    private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, EventArgs e)
+    {
+        TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
+        if (args.car == transform)
+        {
+            AddReward(1f);
+        }
+    }
     public override void OnEpisodeBegin()
     {
         transform.position = spawnPos.position;
         transform.forward = spawnPos.forward;
-        //trackCheckpoints.ResetCheckpoint(transform);
+        trackCheckpoints.ResetCheckpoint(transform);
     }
     public override void CollectObservations(VectorSensor sensor)
     {
-        //Vector3 checkpointForward = trackCheckpoints.GetNextCheckpoint(transform).transform.forward;
-        //float directionDot = Vector3.Dot(transform.forward, checkpointForward);
-        //sensor.AddObservation(directionDot);
+        Vector3 checkpointForward = trackCheckpoints.GetNextCheckpoint(transform).transform.forward;
+        float directionDot = Vector3.Dot(transform.forward, checkpointForward);
+        sensor.AddObservation(directionDot);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
