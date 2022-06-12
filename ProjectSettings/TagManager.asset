@@ -3,15 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Barrier
+  - Checkpoint
+  - Intersection
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Checkpoint
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

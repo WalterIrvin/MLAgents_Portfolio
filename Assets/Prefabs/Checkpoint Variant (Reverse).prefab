@@ -63,5 +63,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint Variant (Reverse)
       objectReference: {fileID: 0}
+    - target: {fileID: 3329870561040168927, guid: ce4bea526937e6e4e99d9f79e1c68047, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329870561040168927, guid: ce4bea526937e6e4e99d9f79e1c68047, type: 3}
+      propertyPath: m_TagString
+      value: Checkpoint
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce4bea526937e6e4e99d9f79e1c68047, type: 3}

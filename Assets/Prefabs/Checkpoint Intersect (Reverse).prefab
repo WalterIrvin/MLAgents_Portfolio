@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 410715054744292593, guid: 23e86e6f1818678419b480dae5dd8bf4, type: 3}
       propertyPath: m_Name
-      value: Intersector
+      value: Checkpoint Intersect (Reverse)
+      objectReference: {fileID: 0}
+    - target: {fileID: 410715054744292593, guid: 23e86e6f1818678419b480dae5dd8bf4, type: 3}
+      propertyPath: m_TagString
+      value: Intersection
       objectReference: {fileID: 0}
     - target: {fileID: 410715054744292597, guid: 23e86e6f1818678419b480dae5dd8bf4, type: 3}
       propertyPath: m_RootOrder
@@ -61,3 +65,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4e4242fb06557774b9b44d577823c5ad, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23e86e6f1818678419b480dae5dd8bf4, type: 3}
+--- !u!1 &8557680785130180388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 410715054744292593, guid: 23e86e6f1818678419b480dae5dd8bf4, type: 3}
+  m_PrefabInstance: {fileID: 8318670229738521557}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1895768384496740160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8557680785130180388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd21df8ce38d1cd4eb8fc5570f6bad25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAllowed: 0
+  green: {fileID: 2100000, guid: ed0e58fc29fb90147bfdf64072b0c673, type: 2}
+  red: {fileID: 2100000, guid: df66896e4887a0c44af87ad444448cb1, type: 2}
