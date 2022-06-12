@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarDriver : MonoBehaviour
 {
-    private float driveForce = 350f;
+    private float driveForce = 13500f;
     public List<Wheel> turning;
     public List<Wheel> driver;
     float trnAmt = 0;
@@ -12,11 +12,11 @@ public class CarDriver : MonoBehaviour
 
     void Update()
     {
-        ManualControl();
+        //ManualControl();
     }
     private void FixedUpdate()
     {
-        SetInputs(fwdAmt, trnAmt);
+        ActInputs(fwdAmt, trnAmt);
     }
     public void ManualControl()
     {
@@ -25,13 +25,18 @@ public class CarDriver : MonoBehaviour
     }
     public void SetInputs(float fwd, float trn)
     {
+        fwdAmt = fwd;
+        trnAmt = trn;
+    }
+    public void ActInputs(float fwd, float trn)
+    {
         foreach (Wheel w in turning)
         {
             w.Steer(trn);
         }
         foreach (Wheel w in driver)
         {
-            w.Accelerate(fwd * driveForce);
+            w.Accelerate(fwd * driveForce * Time.deltaTime);
         }
 
     }

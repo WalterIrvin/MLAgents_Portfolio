@@ -16,6 +16,10 @@ public class DriverAgent : Agent
         spawnPos = transform;
         carDriver = GetComponent<CarDriver>();
     }
+    public void setActiveTrack(TrackCheckpoints track)
+    {
+        trackCheckpoints = track;
+    }
     private void Start()
     {
         trackCheckpoints.OnCarCorrectCheckpoint += TrackCheckpoints_OnCarCorrectCheckpoint;
@@ -26,7 +30,7 @@ public class DriverAgent : Agent
         TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
         if (args.car == transform)
         {
-            AddReward(-1f);
+            AddReward(-0.1f);
         }
     }
     private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, EventArgs e)
@@ -34,7 +38,7 @@ public class DriverAgent : Agent
         TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
         if (args.car == transform)
         {
-            AddReward(1f);
+            AddReward(0.15f);
         }
     }
     public override void OnEpisodeBegin()
@@ -42,12 +46,23 @@ public class DriverAgent : Agent
         transform.position = spawnPos.position;
         transform.forward = spawnPos.forward;
         trackCheckpoints.ResetCheckpoint(transform);
+        carDriver.StopCompletely();
     }
     public override void CollectObservations(VectorSensor sensor)
     {
-        Vector3 checkpointForward = trackCheckpoints.GetNextCheckpoint(transform).transform.forward;
+        Transform nextCheck = trackCheckpoints.GetNextCheckpoint(transform);
+        float isAllowed = 1;
+        if (nextCheck.gameObject.TryGetComponent<Intersection>(out Intersection inter))
+        {
+            if (!inter.isAllowed)
+            {
+                isAllowed = 0;
+            }
+        }
+        Vector3 checkpointForward = nextCheck.forward;
         float directionDot = Vector3.Dot(transform.forward, checkpointForward);
         sensor.AddObservation(directionDot);
+        sensor.AddObservation(isAllowed);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -116,6 +131,19 @@ public class DriverAgent : Agent
         if (collision.gameObject.TryGetComponent<Barrier>(out Barrier barrier))
         {
             AddReward(-0.5f);
+            EndEpisode();
+        }
+        else if (collision.gameObject.TryGetComponent<Intersection>(out Intersection inter))
+        {
+            // Check if agent is running a red or green light
+            if (inter.isAllowed)
+            {
+                AddReward(0.5f);
+            }
+            else if (!inter.isAllowed)
+            {
+                AddReward(-0.5f);
+            }
         }
     }
     private void OnCollisionStay(Collision collision)
@@ -123,6 +151,7 @@ public class DriverAgent : Agent
         if (collision.gameObject.TryGetComponent<Barrier>(out Barrier barrier))
         {
             AddReward(-0.1f);
+            EndEpisode();
         }
     }
 }

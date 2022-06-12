@@ -17,6 +17,7 @@ public class TrackCheckpoints : MonoBehaviour
     private List<int> nextCheckpointIDXList;
 
     bool initialized = false;
+    bool needsReset = false;
     private void Awake()
     {
         carList = new List<Transform>();
@@ -25,9 +26,22 @@ public class TrackCheckpoints : MonoBehaviour
         foreach (Transform checkpointSingle in transform)
         {
             Checkpoint single = checkpointSingle.GetComponent<Checkpoint>();
-            single.setTrackCheckpoints(this);
-            checkpointList.Add(single);
+            if (single.isActiveAndEnabled)
+            {
+                single.setTrackCheckpoints(this);
+                checkpointList.Add(single);
+            }
         }
+    }
+    public void Update()
+    {
+       if (needsReset && initialized)
+       {
+            foreach(Transform car in carList)
+            {
+                ResetCheckpoint(car);
+            }
+       }
     }
     public void InitCars(List<Transform> cars)
     {
@@ -67,14 +81,29 @@ public class TrackCheckpoints : MonoBehaviour
 
     public void ResetCheckpoint(Transform car)
     {
-        int carIdx = carList.IndexOf(car);
-        nextCheckpointIDXList[carIdx] = 0;
+        if (initialized)
+        {
+            int carIdx = carList.IndexOf(car);
+            nextCheckpointIDXList[carIdx] = 0;
+            needsReset = false;
+        }
+        else
+        {
+            needsReset = true;
+        }
     }
 
     public Transform GetNextCheckpoint(Transform car)
     {
-        int carIdx = carList.IndexOf(car);
-        int nextCheckpointIdx = nextCheckpointIDXList[carIdx];
-        return checkpointList[nextCheckpointIdx].transform;
+        if (initialized)
+        {
+            int carIdx = carList.IndexOf(car);
+            int nextCheckpointIdx = nextCheckpointIDXList[carIdx];
+            return checkpointList[nextCheckpointIdx].transform;
+        }
+        else
+        {
+            return checkpointList[0].transform;
+        }
     }
 }
