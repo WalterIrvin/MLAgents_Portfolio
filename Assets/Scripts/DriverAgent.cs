@@ -30,7 +30,7 @@ public class DriverAgent : Agent
         TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
         if (args.car == transform)
         {
-            AddReward(-0.1f);
+            AddReward(-0.25f);
         }
     }
     private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, EventArgs e)
@@ -38,7 +38,7 @@ public class DriverAgent : Agent
         TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
         if (args.car == transform)
         {
-            AddReward(0.15f);
+            AddReward(0.5f);
         }
     }
     public override void OnEpisodeBegin()
@@ -138,7 +138,7 @@ public class DriverAgent : Agent
             // Check if agent is running a red or green light
             if (inter.isAllowed)
             {
-                AddReward(0.5f);
+                AddReward(1f);
             }
             else if (!inter.isAllowed)
             {
