@@ -31,6 +31,7 @@ public class DriverAgent : Agent
         if (args.car == transform)
         {
             AddReward(-0.25f);
+            EndEpisode();
         }
     }
     private void TrackCheckpoints_OnCarCorrectCheckpoint(object sender, EventArgs e)
@@ -41,10 +42,11 @@ public class DriverAgent : Agent
             AddReward(0.5f);
         }
     }
+
     public override void OnEpisodeBegin()
     {
-        transform.position = spawnPos.position;
-        transform.forward = spawnPos.forward;
+        Debug.Log("position we want: " + spawnPos.localPosition + " position we got: " + spawnPos.position);
+        transform.SetPositionAndRotation(spawnPos.position, spawnPos.rotation);
         trackCheckpoints.ResetCheckpoint(transform);
         carDriver.StopCompletely();
     }

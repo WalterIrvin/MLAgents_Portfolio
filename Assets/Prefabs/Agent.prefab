@@ -139,7 +139,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 500
   trackCheckpoints: {fileID: 0}
   spawnPos: {fileID: 0}
 --- !u!114 &7167694044629323671
