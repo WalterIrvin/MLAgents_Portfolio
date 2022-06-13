@@ -75,6 +75,10 @@ public class DriverAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         Transform nextCheck = trackCheckpoints.GetNextCheckpoint(transform);
+        if (nextCheck == null)
+        {
+            return;
+        }
         float isAllowed = 1;
         if (nextCheck.gameObject.TryGetComponent<Intersection>(out Intersection inter))
         {

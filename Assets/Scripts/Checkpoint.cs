@@ -8,21 +8,28 @@ public class Checkpoint : MonoBehaviour
     private TrackCheckpoints trackCheckpoints;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<CarDriver>(out CarDriver player))
+        if (other != null)
         {
-            DriverAgent agento = player.GetComponent<DriverAgent>();
-            agento.setActiveTrack(trackCheckpoints);
-            trackCheckpoints.CarThroughCheckpoint(this, other.transform);
-            if (gameObject.TryGetComponent<Intersection>(out Intersection inter))
+            if (other.TryGetComponent<CarDriver>(out CarDriver player))
             {
-                // Check if agent is running a red or green light
-                if (inter.isAllowed)
+                DriverAgent agento = player.GetComponent<DriverAgent>();
+
+                if (trackCheckpoints != null)
                 {
-                    RewardCard(agento);
+                    trackCheckpoints.CarThroughCheckpoint(this, other.transform);
+                    agento.setActiveTrack(trackCheckpoints);
                 }
-                else if (!inter.isAllowed)
+                if (gameObject.TryGetComponent<Intersection>(out Intersection inter))
                 {
-                    PunishCar(agento);
+                    // Check if agent is running a red or green light
+                    if (inter.isAllowed)
+                    {
+                        RewardCard(agento);
+                    }
+                    else if (!inter.isAllowed)
+                    {
+                        PunishCar(agento);
+                    }
                 }
             }
         }

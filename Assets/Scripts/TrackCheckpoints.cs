@@ -20,17 +20,24 @@ public class TrackCheckpoints : MonoBehaviour
     bool needsReset = false;
     private void Awake()
     {
-        carList = new List<Transform>();
         nextCheckpointIDXList = new List<int>();
         checkpointList = new List<Checkpoint>();
         foreach (Transform checkpointSingle in transform)
         {
             Checkpoint single = checkpointSingle.GetComponent<Checkpoint>();
-            if (single.isActiveAndEnabled)
+            if (single.gameObject.activeSelf)
             {
                 single.setTrackCheckpoints(this);
                 checkpointList.Add(single);
             }
+        }
+        if (carList == null)
+        {
+            carList = new List<Transform>();
+        }
+        else
+        {
+            InitCars(carList);
         }
     }
     public void Update()
@@ -60,7 +67,11 @@ public class TrackCheckpoints : MonoBehaviour
         if (initialized)
         {
             int carIdx = carList.IndexOf(car);
-            int nextCheckpointIdx = nextCheckpointIDXList[carIdx];
+            int nextCheckpointIdx = 0;
+            if (carIdx < nextCheckpointIDXList.Count)
+            {
+                nextCheckpointIdx = nextCheckpointIDXList[carIdx];
+            }
             int passedIdx = checkpointList.IndexOf(checkpoint);
             if (passedIdx == nextCheckpointIdx)
             {
@@ -97,13 +108,35 @@ public class TrackCheckpoints : MonoBehaviour
     {
         if (initialized)
         {
-            int carIdx = carList.IndexOf(car);
-            int nextCheckpointIdx = nextCheckpointIDXList[carIdx];
-            return checkpointList[nextCheckpointIdx].transform;
+            if (carList != null && checkpointList != null)
+            {
+                int carIdx = carList.IndexOf(car);
+                int nextCheckpointIdx = 0;
+                if (carIdx < nextCheckpointIDXList.Count)
+                {
+                    nextCheckpointIdx = nextCheckpointIDXList[carIdx];
+                }
+                else
+                {
+                    Debug.Log(nextCheckpointIDXList.Count + " cur car idx: " + carIdx);
+                }
+                if (nextCheckpointIdx < checkpointList.Count)
+                {
+                    return checkpointList[nextCheckpointIdx].transform;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
         else
         {
-            return checkpointList[0].transform;
+            return null;
         }
     }
 }

@@ -108,17 +108,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
-  - Player
+  - Intersection
   - Barrier
   - Checkpoint
-  - Intersection
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 90.2
   m_SphereCastRadius: 0.45
   m_RayLength: 13
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 73
+    m_Bits: 9
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
@@ -167,7 +166,7 @@ MonoBehaviour:
   m_Model: {fileID: 5022602860645237092, guid: 610a0bfeea0917541a897787a5824b5f, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: Cargent
+  m_BehaviorName: Car_Track
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
