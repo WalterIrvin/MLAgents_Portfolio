@@ -11,14 +11,35 @@ public class DriverAgent : Agent
     [SerializeField] private TrackCheckpoints trackCheckpoints;
     [SerializeField] private Transform spawnPos;
     private CarDriver carDriver;
+    public class RewardSystem
+    {
+        // Current total of all punish/reward hyperparameters
+        public float redLightPunish = -1f;
+        public float greenLightReward = 0.26f;
+        public float correctCheckpoint = 0.25f;
+        public float incorrectCheckpoint = -0.23f;
+        public float barrierInitHit = -0.5f;
+        public float barrierStick = -0.01f;
+    }
+    private RewardSystem rewardsys;
     void Awake()
     {
-        spawnPos = transform;
+        rewardsys = new RewardSystem();
         carDriver = GetComponent<CarDriver>();
     }
     public void setActiveTrack(TrackCheckpoints track)
     {
         trackCheckpoints = track;
+    }
+    public void PunishmentCheckpoint()
+    {
+        // Punish car for running red light
+        AddReward(rewardsys.redLightPunish);
+    }
+    public void RewardCheckpoint()
+    {
+        // Reward car for running green light
+        AddReward(rewardsys.greenLightReward);
     }
     private void Start()
     {
@@ -30,7 +51,7 @@ public class DriverAgent : Agent
         TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
         if (args.car == transform)
         {
-            AddReward(-0.25f);
+            AddReward(rewardsys.incorrectCheckpoint);
             EndEpisode();
         }
     }
@@ -39,14 +60,15 @@ public class DriverAgent : Agent
         TrackCheckpoints.CarCheckpointEventArgs args = (TrackCheckpoints.CarCheckpointEventArgs)e;
         if (args.car == transform)
         {
-            AddReward(0.5f);
+            AddReward(rewardsys.correctCheckpoint);
         }
     }
 
     public override void OnEpisodeBegin()
     {
-        Debug.Log("position we want: " + spawnPos.localPosition + " position we got: " + spawnPos.position);
-        transform.SetPositionAndRotation(spawnPos.position, spawnPos.rotation);
+        //Vector3 offset = new Vector3(UnityEngine.Random.Range(0, 4), 0, UnityEngine.Random.Range(0, 4));
+        transform.position = spawnPos.position;
+        transform.rotation = spawnPos.rotation;
         trackCheckpoints.ResetCheckpoint(transform);
         carDriver.StopCompletely();
     }
@@ -132,27 +154,15 @@ public class DriverAgent : Agent
     {
         if (collision.gameObject.TryGetComponent<Barrier>(out Barrier barrier))
         {
-            AddReward(-0.5f);
+            AddReward(rewardsys.barrierInitHit);
             EndEpisode();
-        }
-        else if (collision.gameObject.TryGetComponent<Intersection>(out Intersection inter))
-        {
-            // Check if agent is running a red or green light
-            if (inter.isAllowed)
-            {
-                AddReward(1f);
-            }
-            else if (!inter.isAllowed)
-            {
-                AddReward(-0.5f);
-            }
         }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.TryGetComponent<Barrier>(out Barrier barrier))
         {
-            AddReward(-0.1f);
+            AddReward(rewardsys.barrierStick);
             EndEpisode();
         }
     }

@@ -139,7 +139,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 500
+  MaxStep: 50000
   trackCheckpoints: {fileID: 0}
   spawnPos: {fileID: 0}
 --- !u!114 &7167694044629323671
@@ -164,7 +164,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 610a0bfeea0917541a897787a5824b5f, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Cargent
@@ -188,7 +188,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 50000
 --- !u!114 &8834556540444792314
 MonoBehaviour:
   m_ObjectHideFlags: 0

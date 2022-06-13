@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarDriver : MonoBehaviour
 {
-    private float driveForce = 135000f;
+    private float driveForce = 13500f;
     public List<Wheel> turning;
     public List<Wheel> driver;
     float trnAmt = 0;
